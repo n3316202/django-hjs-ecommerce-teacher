@@ -12,5 +12,11 @@
         "editor.defaultFormatter": "monosans.djlint"
     },
     "djlint.ignore": ["T002", "T032", "T001", "D018", "H030", "H031","H006","H021"],
-    "python.analysis.packageIndexDepths": [{"name": "django", "depth": 2}],
+    "python.analysis.packageIndexDepths": [
+        {
+            "name": "",
+            "depth": 10,
+            "includeAllSymbols": true
+        }
+    ],
 }
