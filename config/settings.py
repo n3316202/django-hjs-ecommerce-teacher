@@ -130,9 +130,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# dev_2
-# 미디어 파일 경로 설정
-
 # 미디어 파일 경로 설정
 import os
 
