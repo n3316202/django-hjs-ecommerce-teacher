@@ -108,7 +108,6 @@ LANGUAGE_CODE = "ko-kr"  # dev_1
 
 TIME_ZONE = "Asia/Seoul"  # dev_1
 
-
 USE_I18N = True
 
 # dev_5
