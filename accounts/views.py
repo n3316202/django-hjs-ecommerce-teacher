@@ -12,7 +12,7 @@ from django.contrib import messages
 
 
 def logout_user(request):
-    logout(request)
+    logout(request)  # session 에 저장된 sessionid 삭제
     return redirect("/")
 
 
