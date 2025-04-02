@@ -1,7 +1,8 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 
 from store.models import Product, Category
+from django.shortcuts import redirect, render
+from django.contrib import messages
 
 
 # Create your views here.
@@ -32,12 +33,20 @@ def category_summary(request):
 # dev_14
 def category(request, category_id):
 
-    category = Category.objects.get(id=category_id)
-    # select * from product , category where ~~~~
-    # category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    products = Product.objects.filter(category=category)
-    context = {
-        "category": category,
-        "products": products,
-    }
-    return render(request, "store/cotegory.html", context)
+    try:
+        category = Category.objects.get(id=category_id)
+        # category = Category.objects.filter(id=category_id) #query_set
+
+        # select * from product , category where product.category_id =  category.id
+        # category = models.ForeignKey(Category, on_delete=models.CASCADE)
+        products = Product.objects.filter(category=category)
+
+        context = {
+            "category": category,
+            "products": products,
+        }
+        return render(request, "store/cotegory.html", context)
+
+    except:
+        messages.success(request, ("카테고리가 존재 하지 않습니다."))
+        return redirect("store:home")
