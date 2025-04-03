@@ -16,13 +16,15 @@ class Cart:  # 카트 클래스 생성
 
         self.cart = cart
 
+    # dev_16
+    # 리스트 컴프리 헨션
     def __len__(self):
-        pass
+        return sum(item["quantity"] for item in self.cart.values())
 
     def add(self, product, quantity=1, is_update=False):
         product_id = str(product.id)
 
-        # cart = {
+        # self.cart = {
         #          "1":{"quantity":7,"price":"3000.00"}
         #          "2":{"quantity":1,"price":"5000.00"}
         #        }
