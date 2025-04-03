@@ -34,9 +34,14 @@
                                type="num"
                                value="1"
                                style="max-width: 3rem">
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                        <!--dev_15-->
+                        <button class="btn btn-outline-dark flex-shrink-0"
+                                type="button"
+                                value="{{ product.id }}"
+                                id="add-cart">
                             <i class="bi-cart-fill me-1"></i>
-                            Add to cart
+                            <!--dev_15-->
+                            Add to cart(장바구니 담기)
                         </button>
                     </div>
                     <br>
@@ -49,3 +54,8 @@
 {% block footer %}
     {% include "layout/footer.html" %}
 {% endblock footer %}
+{% block script %}
+    <script>
+        
+    </script>
+{% endblock %}
