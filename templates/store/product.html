@@ -54,8 +54,26 @@
 {% block footer %}
     {% include "layout/footer.html" %}
 {% endblock footer %}
+<!--dev_15-->
 {% block script %}
     <script>
-        
+    $(document).on('click','#add-cart',function(e){
+        $.ajax({
+            type:"POST",
+            url:"{% url 'cart:add_cart' %}",
+            data:{
+                product_id:$("#add-cart").val(),
+                product_qty: $("#inputQuantity").val(),
+                csrfmiddlewaretoken:'{{ csrf_token }}',
+                action:"add_cart"
+            },
+            suceess:function(json){
+                console.log(json)                
+            },
+            error: function(e){
+                console.log(e)
+            }
+        });
+    });
     </script>
 {% endblock %}

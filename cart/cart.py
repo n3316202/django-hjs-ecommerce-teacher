@@ -13,12 +13,12 @@ class Cart:  # 카트 클래스 생성
 
         if not cart:
             # session에 cart 객체가 없으면 session 객체에 cart 를 만듦
-            cart = self.session["cart"]
+            cart = self.session[settings.CART_SESSION_ID] = {}
 
         self.cart = cart
 
     def __len__(self):
-        pass
+        return sum(item["quantity"] for item in self.cart.values())
 
     def add(self, product, quantity=1, is_update=False):
         product_id = str(product.id)
