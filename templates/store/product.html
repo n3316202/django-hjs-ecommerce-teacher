@@ -59,13 +59,13 @@
     <script>
     $(document).on('click','#add-cart',function(e){
         $.ajax({
-            type:"POST",
+            type:"post",
             url:"{% url 'cart:add_cart' %}",
             data:{
                 product_id:$("#add-cart").val(),
                 product_qty: $("#inputQuantity").val(),
                 csrfmiddlewaretoken:'{{ csrf_token }}',
-                action:"add_cart"
+                action:"post"
             },
             suceess:function(json){
                 console.log(json)                
