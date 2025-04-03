@@ -17,7 +17,7 @@ class Cart:  # 카트 클래스 생성
         self.cart = cart
 
     def __len__(self):
-        return sum(item["quantity"] for item in self.cart.values())
+        pass
 
     def add(self, product, quantity=1, is_update=False):
         product_id = str(product.id)
