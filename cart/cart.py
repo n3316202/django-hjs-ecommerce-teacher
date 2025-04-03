@@ -8,7 +8,6 @@ class Cart:  # 카트 클래스 생성
     def __init__(self, request):  # 객체 생성시 request 객체를 받도록 함
 
         self.session = request.session  # session 객체를 Cart 객체에 변수로 저장
-
         cart = self.session.get(settings.CART_SESSION_ID)
 
         if not cart:
