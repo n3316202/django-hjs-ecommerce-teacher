@@ -45,7 +45,7 @@ class Cart:  # 카트 클래스 생성
             item["price"] = Decimal(item["price"])
             item["total_price"] = item["price"] * item["quantity"]
 
-            yield item  # 제너레이터 문법
+            yield  item  # 제너레이터 문법 return
 
     def add(self, product, quantity=1, is_update=False):
         product_id = str(product.id)

@@ -20,8 +20,9 @@
 {% block content %}
     <div class="container">
         {% if cart %}
+        {% comment %} item = {"quantity":7,"price":3000.00,"product": <Product: 상품1>, "total_price":21000 } {% endcomment %}
             {% for item in cart %}
-                <div class="card mb-3">
+                <div class="card mt-3">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src=" {{ item.product.image.url }}"
@@ -52,7 +53,7 @@
                         ID :&nbsp;{{ product.id }}
                         <br />
                                         &nbsp;${{ product.sale_price }} {% endcomment %}
-                                        ${{ item.product.price }}
+                                        ${{ item.product.sale_price }}
                                         <br />
                                         ID :
                                         {{ item.product.id }}
