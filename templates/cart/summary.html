@@ -20,7 +20,7 @@
 {% block content %}
     <div class="container">
         {% if cart %}
-        {% comment %} item = {"quantity":7,"price":3000.00,"product": <Product: 상품1>, "total_price":21000 } {% endcomment %}
+            {% comment %} item = {"quantity":7,"price":3000.00,"product": <Product : 상품1>, "total_price":21000 } {% endcomment %}
             {% for item in cart %}
                 <div class="card mt-3">
                     <div class="row g-0">
@@ -92,3 +92,29 @@
 {% block footer %}
     {% include "layout/footer.html" %}
 {% endblock footer %}
+{% block script %}
+    <script>
+    $(document).on('click','#add-cart',function(e){
+        $.ajax({
+            type:"post",
+            url:"{% url 'cart:add_cart' %}",
+            data:{
+                product_id:$("#add-cart").val(),
+                product_qty: $("#inputQuantity").val(),
+                csrfmiddlewaretoken:'{{ csrf_token }}',
+                action:"post"
+            },
+            success:function(json){
+                console.log(json)
+                //dev_16
+                $('#cart_quantity').text(json.qty)
+                //dev_17
+                //location.reload();                 
+            },
+            error: function(e){
+                console.log(e)
+            }
+        });
+    });
+    </script>
+{% endblock %}
