@@ -70,7 +70,9 @@
             success:function(json){
                 console.log(json)
                 //dev_16
-                $('#cart_quantity').text(json.qty)                 
+                //$('#cart_quantity').text(json.qty)
+                //dev_17
+                location.reload();                 
             },
             error: function(e){
                 console.log(e)
