@@ -46,3 +46,19 @@ def summary_cart(request):
     cart = Cart(request)
 
     return render(request, "cart/summary.html", {"cart": cart})
+
+
+# dev_19
+def delete_cart(request):
+
+    # 카트객체 받아 오기
+    cart = Cart(request)
+
+    if request.POST.get("action") == "post":
+        product_id = int(request.POST.get("product_id"))
+
+        product = Product.objects.get(id=product_id)
+
+        cart.remove(product)
+
+        return JsonResponse({"삭제_상품": product_id})
