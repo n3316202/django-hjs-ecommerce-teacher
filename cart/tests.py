@@ -1,32 +1,44 @@
 from django.test import TestCase
-from django.test import TestCase, Client
-from django.contrib.sessions.models import Session
-from django.contrib.sessions.backends.db import SessionStore
-from django.utils.crypto import get_random_string
+
+# 1. Generator란?
+# generator : iterator를 생성해주는 함수, 함수안에 yield 키워드를 사용함
+# genrator 특징
+# iterable한 순서가 지정됨(모든 generator는 iterator)
+# 느슨하게 평가된다.(순서의 다음 값은 필요에 따라 계산됨)
+# 함수의 내부 로컬 변수를 통해 내부상태가 유지된다.
+# 무한한 순서가 있는 객체를 모델링할 수 있다.(명확한 끝이 없는 데이터 스트림)
+# 자연스러운 스트림 처리를 위 파이프라인으로 구성할수 있다.(Java에서 파일스트림 처리시에 특정 바이트단위로 반복하는 것을 말하는듯..)
 
 
-# Create your tests here.
-class SessionDecryptionTest(TestCase):
-    def setUp(self):
-        pass
+class GeneratorTest(TestCase):
 
-    def decrypt_all_sessions():
-        """현재 DB에 저장된 모든 세션을 복호화하여 출력"""
+    # yield = return
+    def test_generator(self):
+        yield 1
+        yield 2
+        yield 3
 
-        sessions = Session.objects.all()  # DB에서 모든 세션 조회
+    def test_generator_result(self):
+        gen = self.test_generator()
 
-        if not sessions.exists():
-            print("❌ 현재 저장된 세션이 없습니다.")
-            return
+        print(type(gen))
+        print(next(gen))
+        print(next(gen))
+        print(next(gen))
+        print(next(gen))  # StopIteration 에러 발생
 
-        print(f"🔹 총 {sessions.count()}개의 세션을 찾았습니다.")
+    def test_generator_for(self):
+        for i in self.test_generator():
+            print("포문", i)
 
-        for session in sessions:
-            try:
-                session_data = SessionStore(
-                    session_key=session.session_key
-                ).load()  # 세션 복호화
-                print(f"✅ 세션 키: {session.session_key}\n   데이터: {session_data}\n")
+    def number_generator(self, n):
+        for i in range(n):
+            yield i * i
+        
 
-            except Exception as e:
-                print(f"❌ 복호화 실패 - 세션 키: {session.session_key}, 오류: {e}")
+    def test_number_generator_ouput(self):
+        gen = self.number_generator(5)
+        output = list(gen)
+        print("아웃풋", output)
+        expected = [0, 1, 4, 9, 16]
+        self.assertEqual(output, expected)

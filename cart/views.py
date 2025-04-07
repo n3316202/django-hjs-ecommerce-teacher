@@ -43,6 +43,6 @@ def add_cart(request):
 def summary_cart(request):
 
     # 카트객체 받아 오기
-    cart = Cart(request)
+    # cart = Cart(request)
 
-    return render(request, "cart/summary.html", {"cart": cart})
+    return render(request, "cart/summary.html")
