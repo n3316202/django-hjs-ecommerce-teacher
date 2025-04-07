@@ -27,7 +27,10 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user)
+            login(request, user) #session key 생성및 세션키 DB 저장
+
+
+
             messages.success(request, "You Have been logged in")
             return redirect("/")
         else:
