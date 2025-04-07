@@ -27,6 +27,12 @@ class Cart:  # 카트 클래스 생성
     def __len__(self):
         return sum(item["quantity"] for item in self.cart.values())
 
+    # dev_21
+    def get_product_total(self):
+        return sum(
+            item["quantity"] * Decimal(item["price"]) for item in self.cart.values()
+        )
+
     # dev_18
     def __iter__(self):
         product_ids = self.cart.keys()  # ("1","2")
