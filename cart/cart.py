@@ -26,7 +26,7 @@ class Cart:  # 카트 클래스 생성
 
         if not cart:
             # session에 cart 객체가 없으면 session 객체에 cart 를 만듦
-            cart = self.session[settings.CART_SESSION_ID] = {}
+            cart = self.session[settings.CART_SESSION_ID] =     
 
         self.cart = cart
 
@@ -104,6 +104,14 @@ class Cart:  # 카트 클래스 생성
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True  # 해당 세션을 DB에 저장
+
+    def convert_cart_to_json(self):
+        if self.request.user.is_authenticated:
+            current_user = User.objects.filter(id=self.request.user.id)
+            # Convert {'3':1} to {"3":1}
+            carty = str(self.cart)
+            carty = carty.replace("'", '"')
+            current_user.update(old_cart=str(carty))
 
     # dev_19
     def remove(self, product):
