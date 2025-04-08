@@ -37,16 +37,19 @@ def login_user(request):
 
             # dev_23
             current_user = User.objects.get(id=request.user.id)
-            saved_cart = current_user.old_cart #{"3": {"quantity": 1, "price": "24000"}} 
+            saved_cart = (
+                current_user.old_cart
+            )  # {"3": {"quantity": 1, "price": "24000"}}
             # add
-            # cart = Cart(request)
-            # if len(cart) > 0:
-            #     cart.convert_cart_to_json()
+            #
+            cart = Cart(request)
+
+            if len(cart) > 0:
+                cart.cart_to_db()
 
             if saved_cart:
-                converted_cart = json.loads(saved_cart) # string 을 Json 객체로
-                # Add
-                cart = Cart(request)
+                converted_cart = json.loads(saved_cart)  # string 을 Json 객체로
+
                 # {"1": {"quantity": 5, "price": "10000"}}
                 # loop
                 for product_id, data in converted_cart.items():
