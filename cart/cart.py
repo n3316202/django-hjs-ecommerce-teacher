@@ -6,6 +6,9 @@ from decimal import Decimal
 # dev_18
 from store.models import Product
 
+# dev_23
+from accounts.models import User
+
 
 # dev_15
 class Cart:  # 카트 클래스 생성
@@ -77,6 +80,16 @@ class Cart:  # 카트 클래스 생성
             self.cart[product_id]["quantity"] += quantity
 
         self.save()
+
+        # dev_23
+        if self.request.user.is_authenticated:  # 로그인이 되어 있는 유저라면
+            current_user = User.objects.filter(id=self.request.user.id)
+            # Convert {'3':1} to {"3":1}
+            carty = str(self.cart)
+            carty = carty.replace("'", '"')
+            current_user.update(
+                old_cart=str(carty)
+            )  # ord_cart 에 장바구니 str 형태로 저장
 
     #     self.sesstion =request.sesssion = { 'cart':' {}(self.cart)  }
     #     self.cart = {

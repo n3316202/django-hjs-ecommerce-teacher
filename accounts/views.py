@@ -5,6 +5,12 @@ from django.contrib import messages
 # from .forms import RegisterUserForm # 상대 경로형식
 from accounts.forms import RegisterUserForm  # 절대 경로 형식
 
+# dev_23
+from accounts.models import User
+import json
+from cart.cart import Cart
+from store.models import Product
+
 # Create your views here.
 
 
@@ -27,8 +33,26 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user) #session key 생성및 세션키 DB 저장
+            login(request, user)  # session key 생성및 세션키 DB 저장
 
+            # dev_23
+            current_user = User.objects.get(id=request.user.id)
+            saved_cart = current_user.old_cart
+
+            if saved_cart:
+                converted_cart = json.loads(saved_cart)
+
+                # add
+                cart = Cart(request)
+
+                # {"1": {"quantity": 5, "price": "10000"}}
+                # loop
+                for product_id, data in converted_cart.items():
+                    quantity = data["quantity"]
+                    print("상품 ID:", product_id)  # 1
+                    print("수량:", quantity)  # 5
+                    product = Product.objects.get(id=product_id)
+                    cart.add(product, quantity)
 
 
             messages.success(request, "You Have been logged in")
