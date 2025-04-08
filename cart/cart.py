@@ -85,8 +85,6 @@ class Cart:  # 카트 클래스 생성
             self.cart[product_id]["quantity"] += quantity
 
         self.save()
-        # dev_23
-        self.cart_to_db()
 
     # dev_23
     def cart_to_db(self):
@@ -108,6 +106,8 @@ class Cart:  # 카트 클래스 생성
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True  # 해당 세션을 DB에 저장
+        # dev_23
+        self.cart_to_db()
 
     # dev_19
     def remove(self, product):
