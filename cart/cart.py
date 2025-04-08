@@ -26,7 +26,7 @@ class Cart:  # 카트 클래스 생성
 
         if not cart:
             # session에 cart 객체가 없으면 session 객체에 cart 를 만듦
-            cart = self.session[settings.CART_SESSION_ID] =     
+            cart = self.session[settings.CART_SESSION_ID] = {}
 
         self.cart = cart
 
