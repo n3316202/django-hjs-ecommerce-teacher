@@ -19,6 +19,7 @@ class GeneratorTest(TestCase):
         yield 3
 
     def test_generator_result(self):
+        
         gen = self.test_generator()
 
         print(type(gen))
