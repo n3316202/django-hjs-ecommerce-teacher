@@ -42,7 +42,7 @@ def payment_process(request):
                 create_order_item = OrderItem(
                     order_id=order_id,
                     product_id=item["product"].id,
-                    quantiry=item["quantity"],
+                    quantity=item["quantity"],
                     price=item["price"],
                 )
 
