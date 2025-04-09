@@ -4,9 +4,14 @@ from cart.cart import Cart
 from .models import Order, OrderItem
 from store.models import Product
 
+# dev_25
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 # dev_24
+# dev_25
+@login_required(login_url="accounts:login_user")
 def create_orders(request):
 
     if request.POST:
@@ -49,5 +54,6 @@ def create_orders(request):
             return redirect("/")
 
     else:
-        messages.success(request, "잘못된 접근 입니다.")
-        return redirect("/")
+        # dev_25
+        # messages.success(request, "잘못된 접근 입니다.")
+        return render(request, "orders/create.html")
