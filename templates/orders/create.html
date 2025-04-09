@@ -2,7 +2,8 @@
 {% extends "layout/base.html" %}
 {% load humanize %}
 {% block head %}
-    {% include "layout/head.html" %}
+    <!--dev26-->
+    {% include "orders/head.html" %}
 {% endblock head %}
 {% block navi %}
     {% include "layout/navbar.html" %}
@@ -298,18 +299,66 @@
                                 </div>
                             </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                                <input type="submit"
-                                       class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary"
-                                       value="Place Order">
-                            </input>
+                                <!--dev_26-->
+                                {% comment %} <input type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" value="Place Order">
+                                </input> {% endcomment %}
+                                <button type="button"
+                                        id="cardPay"
+                                        data-pg="html5_inicis.INIpayTest"
+                                        data-pay="card"
+                                        class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary request-pay"
+                                        value="Place Order">Place Order</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
+    {% endblock content %}
+    {% block footer %}
+        {% include "layout/footer.html" %}
     </div>
-{% endblock content %}
-{% block footer %}
-    {% include "layout/footer.html" %}
-</div>
 {% endblock footer %}
+{% block script %}
+    <script>
+        $(document).on('click','.request-pay',function(e){
+            //data-pg="html5_inicis.INIpayTest"
+            //data-pay="card"
+            let pg = $(this).data('pg')
+            let payMethod = $('this').data('pay')
+            let priceTotals = {{ cart.get_product_total }} //cart 에 있는 함수 호출
+
+            let impCode = 'imp43216235' //상점번호
+            
+            IMP.init(impCode); //고객사 식별코드를 통해 결재 모듈 초기화
+            IMP.request_pay(
+            {   
+                pg:pg,
+                pay_method,pay_method,
+                //merchant_uid: `payment-${crypto.randomUUID()}`, // 주문번호 생성(생략시 포트원에서 자동생성)
+                name: "장바구니 주문", //결제창에 노출될 상품명
+                amount: 100,//테스트를 위하여 100원으로 설정
+                buyer_email:{{user.email}}, //로그인된 유저만 접근할수 있는 페이지 이므로 user객체를 바로 쓸수 있음
+                buyer_name: {{user.username}}, //구매자 이름
+                buyer_tel: "010-4242-4242",
+                buyer_addr: "서울특별시 강남구 신사동",
+                buyer_postcode: "01181",
+            },
+            function (response) {
+                // 결제 종료 시 호출되는 콜백 함수
+                // response.imp_uid 값으로 결제 단건조회 API를 호출하여 결제 결과를 확인하고,
+                // 결제 결과를 처리하는 로직을 작성합니다.
+                // 결재 성공시의 로직
+                if(response.success){
+                    console.log(response)
+                    alert("결재성공")
+                }else{
+                    alert("결재실패")
+                }
+
+            },
+            );
+
+        });
+    </script>
+{% endblock %}
