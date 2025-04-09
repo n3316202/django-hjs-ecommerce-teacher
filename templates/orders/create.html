@@ -334,7 +334,7 @@
             IMP.request_pay(
             {   
                 pg:pg,
-                pay_method,pay_method,
+                pay_method: payMethod,
                 //merchant_uid: `payment-${crypto.randomUUID()}`, // 주문번호 생성(생략시 포트원에서 자동생성)
                 name: "장바구니 주문", //결제창에 노출될 상품명
                 amount: 100,//테스트를 위하여 100원으로 설정
