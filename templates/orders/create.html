@@ -331,7 +331,7 @@
             let impCode = 'imp43216235' //상점번호
             
             IMP.init(impCode); //고객사 식별코드를 통해 결재 모듈 초기화
-            IMP.request_pay(
+            IMP.request_pay(  //결재모듈 팝업 띄워줌
             {   
                 pg:pg,
                 pay_method: payMethod,
