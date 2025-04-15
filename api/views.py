@@ -29,4 +29,4 @@ from rest_framework.response import Response
 
 @api_view(["GET"])
 def hello_world_drf(request):
-    return Response({"message": "Hello World!"})
+    return Response({"message": "Hello World!"}) # 테스트용 템플릿도 포함됨
