@@ -29,3 +29,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = "__all__"
         # fields = ["id", "name", "category"]
+
+    #dev_31
+    def validate_price(self,value):
+        
