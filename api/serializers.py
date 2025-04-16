@@ -2,11 +2,11 @@ from rest_framework import serializers
 from store.models import Category, Product
 
 # 2. Serilaizer 객체의 주요 기능
-# serialization
-# deserialiaztion
-# validation
-# request / response 데이터 핸들링 ( to_internal_value() / to_representation() )
-# nested serialization
+#1) serialization
+#2) deserialiaztion
+#3) validation
+#4) request / response 데이터 핸들링 ( to_internal_value() / to_representation() )
+#5) nested serialization
 
 
 # dev_29
