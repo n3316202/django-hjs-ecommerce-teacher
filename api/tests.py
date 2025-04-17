@@ -5,26 +5,29 @@ import pickle
 
 
 # dev_28 시리얼라이제이션의 이해
-class Rectangle:
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.area = width * height
+
+
+def add_view(num1, num2):
+    return num1 + num2
+
+
+def suv_view(num1, num2):
+    return num1 - num2
 
 
 class ObjectAPITest(TestCase):
     def setUp(self):
         pass
 
-    # 사각형 rect 객체를 직렬화 (Serialization)
-    def test_serialization(self):
-        rect = Rectangle(10, 20)
+    def test_path(self):
 
-        with open("rect.data", "wb") as f:
-            pickle.dump(rect, f)
+        dict = {
+            "products": add_view,
+            "categories": suv_view,
+        }
+        url = "products"
 
-        # 역직렬화 (Deserialization)
-        with open("rect.data", "rb") as f:
-            r = pickle.load(f)
+        print(dict[url](1, 2))
 
-        print(r.width, r.height)
+        url = "sub"
+        print(dict[url](1, 2))
