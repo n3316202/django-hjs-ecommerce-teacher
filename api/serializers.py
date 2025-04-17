@@ -45,7 +45,9 @@ class ProductSerializer(serializers.ModelSerializer):
         # depth = 1
 
     #     {
-    #
+    #"category": {
+    # #         "name": "과일"
+    # #     },
     #     "name": "오렌지",
     #     "price": "12000.00",
     #     "description": "파이썬 책입니다.",
@@ -53,9 +55,7 @@ class ProductSerializer(serializers.ModelSerializer):
     #     "is_sale": false,
     #     "sale_price": 0
     # }
-    #  "category": {
-    # #         "name": "과일"
-    # #     },
+    #  
 
     # def create(self, validated_data):
     #     category_data = validated_data.pop("category")

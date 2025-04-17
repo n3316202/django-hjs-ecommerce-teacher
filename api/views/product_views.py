@@ -24,14 +24,38 @@ def products_api(request):
 
     # dev_30
     # 디시리얼라이져
+    # if request.method == "POST":
+    #     print("데이터", request.data)  # json , dic
+    #     print("타입", type(request.data))  # json , dic
+
+    #     serializer = ProductSerializer(data=request.data)
+
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save()
+
+    #     return Response(serializer.data)
+    
+    # dev_33 view 에서 직접 처리
     if request.method == "POST":
-        print("데이터", request.data)  # json , dic
-        print("타입", type(request.data))  # json , dic
+        
+        # request.data 는 기본적으로 불변임
+        data = request.data.copy()
+        
+        # category 정보 추출 후 제거
+        category_data = data.pop("category")
+        category_data = request.data["category"]
+        
+        # get_or_create 는 dict 형식으로 받기 때문에 category_data는 리스트일 수 있어서 주의
+        if isinstance(category_data,list):
+            category_data = category_data[0]
+        
+        from store.models import Product, Category
+        #카테고리 저장 조회
+        category,_ = Category.objects.get_or_create(**category_data)
 
-        serializer = ProductSerializer(data=request.data)
-
+        serializer = ProductSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(category=category)
 
         return Response(serializer.data)
 
