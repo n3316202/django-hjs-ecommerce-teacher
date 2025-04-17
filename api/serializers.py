@@ -30,6 +30,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 # dev_33
 
+
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()  # dev_33 write 을 할려면
 
@@ -44,7 +45,7 @@ class ProductSerializer(serializers.ModelSerializer):
         # depth = 1
 
     #     {
-    #    
+    #
     #     "name": "오렌지",
     #     "price": "12000.00",
     #     "description": "파이썬 책입니다.",
@@ -55,11 +56,12 @@ class ProductSerializer(serializers.ModelSerializer):
     #  "category": {
     # #         "name": "과일"
     # #     },
-    def create(self, validated_data):
-        category_data = validated_data.pop("category")
 
-        # 카테고리 저장/조회
-        category, _ = Category.objects.get_or_create(**category_data)
-        product = Product.objects.create(**validated_data, category=category)
+    # def create(self, validated_data):
+    #     category_data = validated_data.pop("category")
 
-        return product
+    #     # 카테고리 저장/조회
+    #     category, _ = Category.objects.get_or_create(**category_data)
+    #     product = Product.objects.create(**validated_data, category=category)
+
+    #     return product
