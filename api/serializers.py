@@ -29,7 +29,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 # dev_33
-# The `.create()` method does not support writable nested fields by default.
+
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()  # dev_33 write 을 할려면
 
@@ -43,6 +43,18 @@ class ProductSerializer(serializers.ModelSerializer):
         # 기본적으로 read_only 임
         # depth = 1
 
+    #     {
+    #    
+    #     "name": "오렌지",
+    #     "price": "12000.00",
+    #     "description": "파이썬 책입니다.",
+    #     "image": null,
+    #     "is_sale": false,
+    #     "sale_price": 0
+    # }
+    #  "category": {
+    # #         "name": "과일"
+    # #     },
     def create(self, validated_data):
         category_data = validated_data.pop("category")
 
