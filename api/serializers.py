@@ -29,6 +29,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 # dev_33
+# The `.create()` method does not support writable nested fields by default.
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()  # dev_33 write 을 할려면
 
