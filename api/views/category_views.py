@@ -1,8 +1,9 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from store.models import Product
-from api.serializers import ProductSerializer, CategorySerializer
 from store.models import Category
+
+# dev_32
+from api.serializers.category_serializers import CategorySerializer
 
 # http://127.0.0.1:8000/api/categories/
 # 방식   url         기능
