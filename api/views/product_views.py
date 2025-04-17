@@ -49,6 +49,8 @@ def products_api(request):
         if isinstance(category_data, list):
             category_data = category_data[0]
 
+
+
         # 카테고리 저장 조회
         category, _ = Category.objects.get_or_create(**category_data)
 
