@@ -32,7 +32,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()  # dev_33 write 을 할려면
+    category = CategorySerializer(read_only=True)  # dev_33 write 을 할려면
 
     class Meta:
         model = Product
@@ -45,7 +45,7 @@ class ProductSerializer(serializers.ModelSerializer):
         # depth = 1
 
     #     {
-    #"category": {
+    # "category": {
     # #         "name": "과일"
     # #     },
     #     "name": "오렌지",
@@ -55,7 +55,7 @@ class ProductSerializer(serializers.ModelSerializer):
     #     "is_sale": false,
     #     "sale_price": 0
     # }
-    #  
+    #
 
     # def create(self, validated_data):
     #     category_data = validated_data.pop("category")
