@@ -105,6 +105,8 @@ class CategoryMixins(
     serializer_class = CategorySimpleSerializer
 
     def get(self, request, *args, **kwargs):
+        print("args:", args)
+        print("kwargs:", kwargs)
         return self.retrieve(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):
