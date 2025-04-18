@@ -40,7 +40,7 @@ from .models import Category
 from .serializers import CategorySerializer, CategorySimpleSerializer
 
 
-class CategoriesAPI(APIView):
+class GenericAPIView(APIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     simple_serializer_class = CategorySimpleSerializer

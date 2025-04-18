@@ -69,3 +69,19 @@ class CategoryAPI(APIView):
         category = get_object_or_404(Category, id=pk)
         category.delete()
         return Response("삭제 성공", status=status.HTTP_204_NO_CONTENT)
+
+
+from rest_framework.mixins import ListModelMixin, CreateModelMixin
+from rest_framework.generics import GenericAPIView
+
+
+# dev_36
+class CategoriesMixins(ListModelMixin, CreateModelMixin, GenericAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
