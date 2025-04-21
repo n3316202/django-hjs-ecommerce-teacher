@@ -94,3 +94,19 @@ class CategoriesAPI(APIView):
             return Response(
                 {"error": "Category not found"}, status=status.HTTP_404_NOT_FOUND
             )
+
+
+# class ProductRetrieveByIdOrNameView(RetrieveAPIView):
+#     serializer_class = ProductSerializer
+
+#     def get_object(self):
+#         queryset = Product.objects.all()
+#         lookup_id = self.kwargs.get("id")
+#         lookup_name = self.kwargs.get("name")
+
+#         if lookup_id:
+#             return queryset.get(id=lookup_id)
+#         elif lookup_name:
+#             return queryset.get(name=lookup_name)
+#         else:
+#             raise NotFound("id 또는 name 파라미터가 필요합니다.")

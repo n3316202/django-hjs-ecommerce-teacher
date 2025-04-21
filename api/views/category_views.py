@@ -98,11 +98,17 @@ class CategoriesMixins(ListModelMixin, CreateModelMixin, GenericAPIView):
         return self.create(request, *args, **kwargs)
 
 
+# http://127.0.0.1:8000/api/category/2/
+# http://127.0.0.1:8000/api/category/{name}/
+# http://127.0.0.1:8000/api/category/자바/
+
+
 class CategoryMixins(
     UpdateModelMixin, DestroyModelMixin, RetrieveModelMixin, GenericAPIView
 ):
     queryset = Category.objects.all()
     serializer_class = CategorySimpleSerializer
+    # lookup_field = "name"
 
     def get(self, request, *args, **kwargs):
         print("args:", args)
