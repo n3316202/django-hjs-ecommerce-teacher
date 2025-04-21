@@ -120,3 +120,114 @@ class CategoryMixins(
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+
+# dev_37
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+
+# generics.CreateAPIView : 생성
+# generics.ListAPIView : 목록
+# generics.RetrieveAPIView : 조회
+# generics.DestroyAPIView : 삭제
+# generics.UpdateAPIView : 수정
+# generics.RetrieveUpdateAPIView : 조회/수정
+# generics.RetrieveDestroyAPIView : 조회/삭제
+# generics.ListCreateAPIView : 목록/생성
+# generics.RetrieveUpdateDestroyAPIView : 조회/수정/삭제
+
+# 권한
+# AllowAny	누구나 접근 가능 (기본값)
+# IsAuthenticated	로그인한 사용자만 접근 가능
+# IsAdminUser	is_staff=True인 관리자만 접근 가능
+# IsAuthenticatedOrReadOnly	읽기는 모두 허용, 쓰기는 인증 사용자만 가능
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import ValidationError
+
+
+# 같은 이름의 카테고리가 이미 존재할 경우 오류
+class CategoriesGeneric(ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    # permission_classes = [IsAuthenticated]
+
+    # create 함수를 오버라이딩
+    def create(self, request, *args, **kwargs):
+        name = request.data.get("name")
+
+        # 같은 이름의 카테고리가 이미 존재할 경우 오류 메세지
+        if Category.objects.filter(name=name).exists():
+            raise ValidationError({"message": "같은 이름의 카테고리가 있습니다."})
+
+        response = super().create(request, *args, **kwargs)
+        response.data = {
+            "message": "카테고리가 성공적으로 생성 되었습니다.",
+            "category": response.data,
+        }
+
+        return response
+
+
+# Get  category/{id}       category
+# PUT  category/{id}       modify category
+# DELETE  category/{id}    delete category
+
+
+class CategoryGeneric(RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySimpleSerializer
+
+    # 조회시 로그 찍기
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        print(f"조회 카테고리 ID {instance.id} - {instance.name}")
+        return super().retrieve(request, *args, **kwargs)
+
+    # 수정 시 로깅 및 응답 커스텀 마이징
+    def update(self, request, *args, **kwargs):
+
+        instance = self.get_object()
+        print(f"수정 카테고리 이름 {instance.name} -> {request.data.get("name")}")
+        respose = super().update(request, *args, **kwargs)  # update 쿼리 날아감
+        respose.data = {
+            "message": f"수정 카테고리 이름 {instance.name} -> {request.data.get("name")}",
+            "category": respose.data,
+        }
+
+        return respose
+
+    # class DestroyModelMixin:
+    #     """
+    #     Destroy a model instance.
+    #     """
+    #     def destroy(self, request, *args, **kwargs):
+    #         instance = self.get_object()
+    #         self.perform_destroy(instance)
+    #         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    #     def perform_destroy(self, instance):
+    #         instance.delete()
+
+    # HTTP DELETE 요청 →
+    # → destroy() 실행 →
+    # → perform_destroy(instance) 호출 →
+    # → 객체 삭제
+
+    # 카테고리 자바는 삭제 되지 않도록 처리
+    from rest_framework.exceptions import ValidationError, PermissionDenied
+
+    def perform_destroy(self, instance):
+
+        if instance.name == "자바":
+            raise ValidationError("이 카테고리는 관리자만이 삭제 가능 합니다.")
+
+        print(f"[삭제] 카테고리 {instance.name} 삭제됨")
+        instance.delete()
+
+    # 삭제 응답 커스텀 마이징
+    def destroy(self, request, *args, **kwargs):
+        self.perform_destroy(self.get_object())
+
+        return Response(
+            {"message": "카테고리가 삭제 되었습니다."},
+            status=status.HTTP_204_NO_CONTENT,
+        )
