@@ -231,3 +231,12 @@ class CategoryGenericView(RetrieveUpdateDestroyAPIView):
             {"message": "카테고리가 삭제 되었습니다."},
             status=status.HTTP_204_NO_CONTENT,
         )
+
+
+# dev_38
+from rest_framework.viewsets import ModelViewSet
+
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySimpleSerializer
