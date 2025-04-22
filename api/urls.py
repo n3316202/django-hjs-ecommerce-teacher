@@ -38,6 +38,6 @@ urlpatterns = [
     # path("categories/", category_views.CategoriesMixins.as_view()),
     # path("category/<str:name>/", category_views.CategoryMixins.as_view()),
     # dev_37
-    path("categories/", category_views.CategoriesGeneric.as_view()),
-    path("category/<int:pk>/", category_views.CategoryGeneric.as_view()),
+    path("categories/", category_views.CategoriesGenericView.as_view()),
+    path("category/<int:pk>/", category_views.CategoryGenericView.as_view()),
 ]
