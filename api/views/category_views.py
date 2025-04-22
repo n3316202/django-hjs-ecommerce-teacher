@@ -236,6 +236,13 @@ class CategoryGenericView(RetrieveUpdateDestroyAPIView):
 # dev_38
 from rest_framework.viewsets import ModelViewSet
 
+# ModelViewSet 또한 Mixins 집합이므로 아래를 기본적으로 상속 되어 제공되는 메소드가 있음
+# create - POST /
+# list - GET /
+# retrieve - GET /
+# update - PUT /
+# partial_update - PATCH /
+# destroy - DELETE /
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()

@@ -16,6 +16,14 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register("categories", category_views.CategoryViewSet)
 
+category_list = category_views.CategoryViewSet.as_view(
+    {"get": "list", "post": "create"}
+)
+
+category_detail = category_views.CategoryViewSet.as_view(
+    {"get": "retrieve", "put": "update", "patch": "partial_update", "delete": "destroy"}
+)
+
 
 urlpatterns = [
     # path("hello-world/", base_views.hello_world),
@@ -49,5 +57,20 @@ urlpatterns = [
     # path("categories/", category_views.CategoriesGenericView.as_view()),
     # path("category/<int:pk>/", category_views.CategoryGenericView.as_view()),
     # dev_38
-    path("", include(router.urls)),
+    # 이렇게 하면 다음 경로들이 자동으로 만들어집니다:
+    # GET /categories/
+    # POST /categories/
+    # GET /categories/<pk>/
+    # PUT /categories/<pk>/
+    # PATCH /categories/<pk>/
+    # DELETE /categories/<pk>/
+    # path("", include(router.urls)),
+    path("categories/", category_list),
+    path("category/<int:pk>/", category_detail),
 ]
+
+
+# from rest_framework import routers
+
+# router = routers.DefaultRouter()
+# router.register("categories", category_views.CategoryViewSet)
