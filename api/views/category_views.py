@@ -285,11 +285,11 @@ class CategoryViewSet(ModelViewSet):
     # GET /api/categories/{search}/ = restful 방식
 
     # 검색 기능 추가 (쿼리 파라미터: ?search=과일)
-    # def get_queryset(self):
-    #     # queryset = Category.objects.all()
+    def get_queryset(self):
+        # queryset = Category.objects.all()
 
-    #     search = self.request.query_params.get("search")
-    #     if search:
-    #         queryset = queryset.filter(name__icontains=search)
+        search = self.request.query_params.get("search")
+        if search:
+            queryset = queryset.filter(name__icontains=search)
 
-    #     return queryset
+        return queryset
